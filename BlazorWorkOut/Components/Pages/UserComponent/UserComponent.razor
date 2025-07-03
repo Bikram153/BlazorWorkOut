@@ -1,0 +1,26 @@
+﻿<input type="checkbox" @bind="DisplayEmail" /><label>Display Email</label>
+@if(user is null)
+{
+	@NullUser
+}
+else if(user.Count==0)
+{
+	@EmptyUser
+}
+else
+{
+	foreach(var item in user)
+	{
+		<UserInfoComponent user="item" DisplayEmail="@DisplayEmail"></UserInfoComponent>
+	}
+}
+
+@code {
+	private bool DisplayEmail = true;
+	[Parameter]
+	public RenderFragment NullUser{ get; set; }
+	[Parameter]
+	public RenderFragment EmptyUser{ get; set; }
+	[Parameter]
+	public List<User> user { get; set; }
+}

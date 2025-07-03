@@ -1,0 +1,18 @@
+﻿@page "/"
+@rendermode InteractiveServer
+<h1>Home</h1>
+<UserComponent user="user">
+	<NullUser>
+		<br />
+			<span>Loading.........</span>
+		<br />
+	</NullUser>
+	<EmptyUser>
+		<br />
+			<span>There is no data</span>
+		<br />
+	</EmptyUser>
+</UserComponent>
+<MyTextbox CustomAttributes="attributes"></MyTextbox>
+
+

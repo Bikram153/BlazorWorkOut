@@ -1,0 +1,21 @@
+﻿<p><b>User Name: </b><span>@user.UserName</span></p>
+@if(DisplayEmail)
+{
+	<p><b>Email: </b><span>@user.Email</span></p>
+}
+
+@if(displayInfo)
+{
+	<p>The Email of @user.UserName is @user.Email</p>
+}
+
+<button @onclick="@(()=>displayInfo=!displayInfo)">Show Info</button><br />
+
+
+@code {
+	[Parameter]
+	public User user { get; set; }
+	[Parameter]
+	public bool DisplayEmail{ get; set; }
+	private bool displayInfo = false;
+}
