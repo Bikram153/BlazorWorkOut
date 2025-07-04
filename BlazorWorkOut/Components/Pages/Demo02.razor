@@ -1,0 +1,17 @@
+﻿@page "/demo02"
+@rendermode InteractiveServer
+@inject IUserService userServices
+
+@if (userServices.GetUser().Count() == 0)
+{
+	<b>No user to display!!!</b>
+}
+else
+{
+	@foreach (var item in userServices.GetUser())
+	{
+		<p><b>Username :</b>@item.UserName</p>
+		<p><b>Email :</b>@item.Email</p>
+		<br />
+	}
+}
