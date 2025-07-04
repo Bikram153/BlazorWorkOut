@@ -3,7 +3,7 @@ namespace BlazorWorkOut.Components.Pages
 {
     public partial class Home
     {
-        private List<User>? user;
+        private List<User>? users;
         private Dictionary<string, object> attributes = new Dictionary<string, object>
         {
             {"placeholder","First Name" },
@@ -13,7 +13,7 @@ namespace BlazorWorkOut.Components.Pages
         {
             await Task.Delay(5000);
             //user = new List<User>();
-            user = new List<User>
+            users = new List<User>
             {
                 new User
                 {
@@ -28,6 +28,5 @@ namespace BlazorWorkOut.Components.Pages
             };
             await base.OnInitializedAsync();
         }
-
     }
 }

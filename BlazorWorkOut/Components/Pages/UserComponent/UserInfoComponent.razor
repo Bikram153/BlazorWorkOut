@@ -10,6 +10,7 @@
 }
 
 <button @onclick="@(()=>displayInfo=!displayInfo)">Show Info</button><br />
+<button @onclick="@(()=>DeleteCurrentUser.InvokeAsync(user))">Delete</button>
 
 
 @code {
@@ -18,4 +19,6 @@
 	[Parameter]
 	public bool DisplayEmail{ get; set; }
 	private bool displayInfo = false;
+	[Parameter]
+	public EventCallback<User> DeleteCurrentUser{ get; set; }
 }
