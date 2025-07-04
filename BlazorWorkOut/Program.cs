@@ -1,10 +1,13 @@
 using BlazorWorkOut.Components;
+using BlazorWorkOut.Components.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+ConfigureServices(builder.Services);
 
 var app = builder.Build();
 
@@ -26,3 +29,8 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.Run();
+
+static void ConfigureServices(IServiceCollection services)
+{
+    services.AddTransient<IUserService, UserService>();
+}
