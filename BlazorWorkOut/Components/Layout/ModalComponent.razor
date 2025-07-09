@@ -1,0 +1,37 @@
+﻿@if(showPopup)
+{
+    <div class="modal-backdrop show"></div>
+    <div class="modal fade show" style="display:block" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" @onclick="Hide" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>@BodyContent</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"  @onclick="Hide" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" @onclick="Confirm" class="btn btn-primary">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@code{
+    private bool showPopup = false;
+    public User UserToDelete{ get; set; }
+    public string BodyContent{ get; set; }
+
+    [Parameter]
+    public EventCallback<User> OnConfirmed{ get; set; }
+
+    public void Show() => showPopup = true;
+    public void Hide() => showPopup = false;
+
+    public async Task Confirm()
+    {
+        await OnConfirmed.InvokeAsync(UserToDelete);
+    }
+}

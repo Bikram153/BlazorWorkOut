@@ -1,0 +1,55 @@
+﻿@inject IJSRuntime js
+<input type="checkbox" @bind="DisplayEmail" /><label>Display Email</label>
+@if(displayContacts)
+{
+	@if(users is null)
+	{
+		@NullUser
+	}
+	else if(users.Count==0)
+	{
+		@EmptyUser
+	}
+	else
+	{
+		foreach(var item in users)
+		{
+			<UserInfoComponent user="item" DisplayEmail="@DisplayEmail" DeleteCurrentUser="@RequestPermission"></UserInfoComponent>
+		}
+		<ModalComponent @ref="modalComponenet" OnConfirmed="OnDeleteConfirmed"></ModalComponent>
+	}
+}
+
+@code {
+	private ModalComponent modalComponenet;
+	private bool DisplayEmail = true;
+	private bool displayContacts = true;
+	[Parameter]
+	public RenderFragment NullUser{ get; set; }
+	[Parameter]
+	public RenderFragment EmptyUser{ get; set; }
+	[Parameter]
+	public List<User> users { get; set; }
+
+	private async Task RequestPermission(User user)
+	{
+		// var confirm=await js.InvokeAsync<bool>("confirm", $"Do you want to delete {user.UserName} with email {user.Email}?");
+		// if(confirm)
+		// {
+		// 	users.Remove(user);
+		// }
+
+		modalComponenet.BodyContent = $"Do you need to delete {user.UserName} and {user.Email} from the list?";
+		modalComponenet.UserToDelete = user;
+		modalComponenet.Show();
+	}
+
+	private async Task OnDeleteConfirmed(User user)
+	{
+		users.Remove(user);
+		modalComponenet.Hide();
+	}
+
+	public void ShowContact() => displayContacts = true;
+	public void HideContact() => displayContacts = false;
+}
