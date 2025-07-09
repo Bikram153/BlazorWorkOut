@@ -1,4 +1,5 @@
-﻿<input type="checkbox" @bind="DisplayEmail" /><label>Display Email</label>
+﻿@inject IJSRuntime js
+<input type="checkbox" @bind="DisplayEmail" /><label>Display Email</label>
 @if(users is null)
 {
 	@NullUser
@@ -24,8 +25,12 @@ else
 	[Parameter]
 	public List<User> users { get; set; }
 
-	private void DeleteUser(User user)
+	private async Task DeleteUser(User user)
 	{
-		users.Remove(user);
+		var confirm=await js.InvokeAsync<bool>("confirm", $"Do you want to delete {user.UserName} with email {user.Email}?");
+		if(confirm)
+		{
+			users.Remove(user);
+		}
 	}
 }

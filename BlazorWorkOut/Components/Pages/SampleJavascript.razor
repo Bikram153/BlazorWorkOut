@@ -1,0 +1,18 @@
+﻿@page "/SampleJavascript"
+@rendermode InteractiveServer
+@inject IJSRuntime jsRuntime
+<h3>SampleJavascript</h3>
+<button @onclick="()=>CallInvokeMethodJavascript()">Call Instance Method</button>
+@code {
+	[JSInvokable]
+	public async Task<string> GetValueFromInstance()
+	{
+		return "Hello World from Instance";
+	}
+
+	public async Task CallInvokeMethodJavascript()
+	{
+		var sampleJsreference = await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/sample.js");
+		await sampleJsreference.InvokeVoidAsync("CallInstanceMethod", DotNetObjectReference.Create(this));
+	}
+}
