@@ -1,7 +1,7 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 <h1>Home</h1>
-<UserComponent users="users">
+<UserComponent @ref="userComponent" users="users">
 	<NullUser>
 		<br />
 			<span>Loading.........</span>
@@ -14,5 +14,10 @@
 	</EmptyUser>
 </UserComponent>
 <MyTextbox CustomAttributes="attributes"></MyTextbox>
+
+<br/>
+
+<button @onclick="HideContacts">Show/Hide Contatcts</button>
+
 
 

@@ -1,4 +1,5 @@
-﻿using BlazorWorkOut.Components.Services;
+﻿using BlazorWorkOut.Components.Pages.UserComponents;
+using BlazorWorkOut.Components.Services;
 using BlazorWorkOut.Models;
 using Microsoft.AspNetCore.Components;
 namespace BlazorWorkOut.Components.Pages
@@ -8,6 +9,8 @@ namespace BlazorWorkOut.Components.Pages
         [Inject]
         private IUserService userService { get; set; }
         private List<User>? users;
+        private bool IsContactDisplayed = true;
+        private UserComponent userComponent;
         private Dictionary<string, object> attributes = new Dictionary<string, object>
         {
             {"placeholder","First Name" },
@@ -16,22 +19,35 @@ namespace BlazorWorkOut.Components.Pages
         protected async override Task OnInitializedAsync()
         {
             await Task.Delay(500);
-            users = userService.GetUser();
+            //users = userService.GetUser();
             //users = new List<User>();
-            //users = new List<User>
-            //{
-            //    new User
-            //    {
-            //        UserName = "Bikram",
-            //        Email = "bikram@gmail.com"
-            //    },
-            //    new User
-            //    {
-            //        UserName = "Sayan",
-            //        Email = "sayan@gmail.com"
-            //    }
-            //};
+            users = new List<User>
+            {
+                new User
+                {
+                    UserName = "Bikram",
+                    Email = "bikram@gmail.com"
+                },
+                new User
+                {
+                    UserName = "Sayan",
+                    Email = "sayan@gmail.com"
+                }
+            };
             await base.OnInitializedAsync();
+        }
+
+        private void HideContacts()
+        {
+            IsContactDisplayed = !IsContactDisplayed;
+            if (!IsContactDisplayed)
+            {
+                userComponent.HideContact();
+            }
+            else
+            {
+                userComponent.ShowContact();
+            }
         }
     }
 }
